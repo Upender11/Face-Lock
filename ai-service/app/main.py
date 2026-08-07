@@ -87,7 +87,8 @@ def verify_face(payload: VerifyFaceRequest):
     best_score = float(scores[best_idx])
     best_candidate_id = payload.candidates[best_idx].id
 
-    is_match = best_score >= payload.threshold
+    threshold = payload.threshold if payload.threshold is not None else 0.70
+    is_match = best_score >= threshold
 
     return VerifyFaceResponse(
         match=is_match,

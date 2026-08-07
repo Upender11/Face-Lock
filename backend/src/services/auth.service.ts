@@ -20,7 +20,7 @@ export class AuthService {
   static async hashPassword(password: string): Promise<string> {
     return bcryptjs.hash(password, 10);
   }
-
+ 
   /**
    * Compares a plain-text password against a hashed password.
    */

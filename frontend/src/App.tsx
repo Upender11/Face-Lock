@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import { ToastContainer, type ToastType } from './components/Toast';
@@ -32,7 +32,7 @@ function App() {
     setToasts((prev) => prev.filter((t) => t.id !== id));
   };
 
-  const handleLoginSuccess = (token: string) => {
+  const handleLoginSuccess = () => {
     localStorage.setItem('isAuthenticated', 'true');
     setIsAuthenticated(true);
   };

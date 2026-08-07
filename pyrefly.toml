@@ -1,0 +1,2 @@
+[tool.pyrefly]
+python-interpreter-path = "ai-service/venv/Scripts/python.exe"

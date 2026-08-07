@@ -30,10 +30,12 @@ def decode_base64_image(base64_str: str) -> Image.Image:
 def generate_embedding_from_image(image: Image.Image) -> list:
     """Detects a face in the image, generates its 512-dim embedding, and returns it."""
     # 1. Run detection first to count faces and verify quality
-    boxes, probs = mtcnn.detect(image)
-    
-    if boxes is None or len(boxes) == 0:
+    detect_result = mtcnn.detect(image)
+    if detect_result is None or detect_result[0] is None:
         raise ValueError("Face not detected")
+        
+    boxes = detect_result[0]
+    probs = detect_result[1]
     
     if len(boxes) > 1:
         raise ValueError("Multiple faces detected")
@@ -43,12 +45,19 @@ def generate_embedding_from_image(image: Image.Image) -> list:
         raise ValueError("Poor image quality")
 
     # 2. Extract cropped & normalized face tensor [3, 160, 160] directly using pre-detected boxes (Single-pass MTCNN)
-    face_tensor = mtcnn.extract(image, boxes, save_path=None)
+    face_tensor = mtcnn.extract(image, boxes[0], save_path=None)
     if face_tensor is None:
         raise ValueError("Face alignment extraction failed")
 
     # 3. Generate embedding vector [512]
     with torch.no_grad():
+        # Ensure we are handling a PyTorch tensor (type checker fallback)
+        if isinstance(face_tensor, list):
+            face_tensor = face_tensor[0]
+            
+        import typing
+        face_tensor = typing.cast(torch.Tensor, face_tensor)
+        
         face_tensor = face_tensor.to(device).unsqueeze(0)
         embedding_tensor = resnet(face_tensor)
         embedding = embedding_tensor.squeeze(0).cpu().tolist()
