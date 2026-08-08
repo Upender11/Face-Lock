@@ -16,7 +16,7 @@ A biometric full-stack authentication application using deep-neural face verific
 
 ## 🛠 Tech Stack
 
-- **Frontend**: React, TypeScript, Vite, React Router, Axios, Lucide Icons, Vanilla CSS
+- **Frontend**: React, TypeScript, Vite, React Router, Axios, Lucide Icons, CSS
 - **Backend Server**: Node.js, Express, TypeScript, Prisma ORM, JWT Authentication, Nodemailer, BcryptJS, Cookie-Parser, Express-Rate-Limit
 - **AI Microservice**: Python, FastAPI, FaceNet-PyTorch (`InceptionResnetV1`), MTCNN, OpenCV, NumPy
 - **Database**: SQLite (Local development database `dev.db`)
