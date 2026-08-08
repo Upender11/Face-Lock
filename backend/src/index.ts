@@ -23,7 +23,7 @@ const authLimiter = rateLimit({
 // Enable CORS with credentials support (required for cookies)
 app.use(
   cors({
-    origin: ['http://localhost:5173', 'http://127.0.0.1:5173'],
+    origin: ['http://localhost:5173', 'http://127.0.0.1:5173','https://face-lock-amber.vercel.app'],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],

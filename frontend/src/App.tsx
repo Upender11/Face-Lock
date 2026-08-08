@@ -32,9 +32,10 @@ function App() {
     setToasts((prev) => prev.filter((t) => t.id !== id));
   };
 
-  const handleLoginSuccess = () => {
+  const handleLoginSuccess = (token: string) => {
     localStorage.setItem('isAuthenticated', 'true');
     setIsAuthenticated(true);
+    console.log(token)
   };
 
   const handleLogout = async () => {
@@ -58,9 +59,9 @@ function App() {
             <Route path="/register" element={<Register addToast={addToast} />} />
             <Route path="/login" element={<Login onLoginSuccess={handleLoginSuccess} addToast={addToast} />} />
             <Route path="/dashboard" element={
-              <ProtectedRoute>
+              // <ProtectedRoute>
                 <Dashboard onLogout={handleLogout} addToast={addToast} />
-              </ProtectedRoute>
+              // </ProtectedRoute>
             } />
             <Route path="*" element={<NotFound />} />
           </Routes>
