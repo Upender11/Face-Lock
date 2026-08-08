@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import { ToastContainer, type ToastType } from './components/Toast';
-import { ProtectedRoute } from './components/ProtectedRoute';
+// import { ProtectedRoute } from './components/ProtectedRoute';
 import Landing from './pages/Landing';
 import Register from './pages/Register';
 import Login from './pages/Login';
