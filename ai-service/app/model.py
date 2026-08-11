@@ -31,6 +31,12 @@ def generate_embedding_from_image(image: Image.Image) -> list:
     """Detects a face in the image, generates its 512-dim embedding, and returns it."""
     # 1. Run detection first to count faces and verify quality
     detect_result = mtcnn.detect(image)
+    print("DEBUG: detect_result =", detect_result, "type =", type(detect_result))
+    if isinstance(detect_result, tuple):
+        print("DEBUG: len(detect_result) =", len(detect_result))
+        for i, val in enumerate(detect_result):
+            print(f"DEBUG: detect_result[{i}] type =", type(val), "value =", val)
+            
     if detect_result is None or detect_result[0] is None:
         raise ValueError("Face not detected")
         
@@ -39,13 +45,18 @@ def generate_embedding_from_image(image: Image.Image) -> list:
     
     if len(boxes) > 1:
         raise ValueError("Multiple faces detected")
-        
-    prob = probs[0]
+
+    # Handle list-like vs. single float structures for probs
+    if isinstance(probs, (list, np.ndarray)) or hasattr(probs, '__getitem__'):
+        prob = probs[0]
+    else:
+        prob = probs
+
     if prob is None or prob < 0.90:
         raise ValueError("Poor image quality")
 
     # 2. Extract cropped & normalized face tensor [3, 160, 160] directly using pre-detected boxes (Single-pass MTCNN)
-    face_tensor = mtcnn.extract(image, boxes[0], save_path=None)
+    face_tensor = mtcnn.extract(image, boxes, save_path=None)
     if face_tensor is None:
         raise ValueError("Face alignment extraction failed")
 
