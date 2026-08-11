@@ -30,7 +30,7 @@ function App() {
   const handleLoginSuccess = (token: string) => {
     localStorage.setItem('isAuthenticated', 'true');
     setIsAuthenticated(true);
-    console.log(token)
+    console.log("Token: ",token)
   };
 
   const handleLogout = async () => {
