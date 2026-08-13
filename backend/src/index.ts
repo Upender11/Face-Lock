@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import rateLimit from 'express-rate-limit';
 import authRoutes from './routes/auth.routes';
+import { connectDB } from './lib/mongoose';
 
 // Load environment variables
 dotenv.config();
@@ -48,7 +49,9 @@ app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok', service: 'node-backend' });
 });
 
-// Start listening
-app.listen(PORT, () => {
-  console.log(`Node backend running on port ${PORT}`);
+// Connect to database and start listening
+connectDB().then(() => {
+  app.listen(PORT, () => {
+    console.log(`Node backend running on port ${PORT}`);
+  });
 });

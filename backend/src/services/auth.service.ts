@@ -1,6 +1,6 @@
 import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import prisma from '../lib/prisma';
+import { User, FaceEmbedding } from '../lib/mongoose';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'super_secret_jwt_key_987654321_face_recognition';
 
@@ -39,47 +39,52 @@ export class AuthService {
    * Retrieves a User from the database by email address.
    */
   static async getUserByEmail(email: string) {
-    return prisma.user.findUnique({
-      where: { email },
-    });
+    const user = await User.findOne({ email });
+    if (!user) return null;
+    return {
+      id: user._id.toString(),
+      name: user.name,
+      email: user.email,
+      passwordHash: user.passwordHash,
+      createdAt: user.createdAt,
+    };
   }
  
   /**
    * Retrieves a User from the database by user ID.
    */
   static async getUserById(id: string) {
-    return prisma.user.findUnique({
-      where: { id },
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        createdAt: true,
-      },
-    });
+    const user = await User.findById(id);
+    if (!user) return null;
+    return {
+      id: user._id.toString(),
+      name: user.name,
+      email: user.email,
+      createdAt: user.createdAt,
+    };
   }
 
   /**
    * Registers a new User and their face embeddings inside a database transaction.
    */
   static async createUser(name: string, email: string, passwordHash: string, embeddings: number[][]) {
-    return prisma.$transaction(async (tx) => {
-      const user = await tx.user.create({
-        data: {
-          name,
-          email,
-          passwordHash,
-        },
-      });
-
-      await tx.faceEmbedding.createMany({
-        data: embeddings.map((emb) => ({
-          userId: user.id,
-          embedding: JSON.stringify(emb),
-        })),
-      });
-
-      return user;
-    });
+    const user = await User.create({ name, email, passwordHash });
+    try {
+      const faceEmbeddings = embeddings.map((emb) => ({
+        userId: user._id,
+        embedding: JSON.stringify(emb),
+      }));
+      await FaceEmbedding.insertMany(faceEmbeddings);
+    } catch (err) {
+      // Rollback user creation manually (works on standalone MongoDB installs too)
+      await User.findByIdAndDelete(user._id);
+      throw err;
+    }
+    return {
+      id: user._id.toString(),
+      name: user.name,
+      email: user.email,
+      createdAt: user.createdAt,
+    };
   }
 }

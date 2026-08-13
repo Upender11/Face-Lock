@@ -1,5 +1,5 @@
 import axios from 'axios';
-import prisma from '../utils/db';
+import { FaceEmbedding } from '../lib/mongoose';
 
 const AI_SERVICE_URL = process.env.AI_SERVICE_URL || 'http://localhost:8000';
 
@@ -71,15 +71,10 @@ export class FaceService {
    * Fetches all registered face embeddings from the database.
    */
   static async getAllFaceEmbeddings(): Promise<Array<{ userId: string; embedding: number[] }>> {
-    const records = await prisma.faceEmbedding.findMany({
-      select: {
-        userId: true,
-        embedding: true,
-      },
-    });
+    const records = await FaceEmbedding.find({}, 'userId embedding');
 
     return records.map((rec) => ({
-      userId: rec.userId,
+      userId: rec.userId.toString(),
       embedding: JSON.parse(rec.embedding) as number[],
     }));
   }
