@@ -28,9 +28,10 @@ function App() {
   };
 
   const handleLoginSuccess = (token: string) => {
+    localStorage.setItem('token', token);
     localStorage.setItem('isAuthenticated', 'true');
     setIsAuthenticated(true);
-    console.log("Token: ",token)
+    console.log("Token: ", token);
   };
 
   const handleLogout = async () => {
@@ -39,6 +40,7 @@ function App() {
     } catch (err) {
       console.error('Logout error:', err);
     }
+    localStorage.removeItem('token');
     localStorage.removeItem('isAuthenticated');
     setIsAuthenticated(false);
   };
