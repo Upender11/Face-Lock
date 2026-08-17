@@ -12,6 +12,11 @@ const app = express();
 
 const PORT = process.env.PORT || 5000;
 
+// Trust proxy header when running behind Vercel reverse proxy gateways
+if (process.env.VERCEL === '1') {
+  app.set('trust proxy', 1);
+}
+
 // --------------------------------------------------
 // Rate limiting for authentication endpoints
 // --------------------------------------------------
