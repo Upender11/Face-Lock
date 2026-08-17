@@ -70,7 +70,7 @@ Use this guide to test the system manually in a systematic sequence.
 | **TC-REG-004** | Registration | Register with mismatched passwords | Password: `password123`<br>Confirm: `password321` | UI blocks submission with "Passwords do not match" | **Invalid Input** |
 | **TC-REG-005** | Registration | Register duplicate email address | Existing email in DB | Registration fails, returns "Email is already registered" | **Invalid Input** |
 | **TC-REG-006** | Registration | Register duplicate face vector | Face matches existing profile | Registration fails, returns "This face is already registered" | **Useful Case** |
-| **TC-REG-007** | Registration | Run multiple concurrent registrations | Multiple clients registering at the same millisecond | DB transactions queue correctly without SQLite write locks | **Useful Case** |
+| **TC-REG-007** | Registration | Run multiple concurrent registrations | Multiple clients registering at the same millisecond | MongoDB database queries run concurrently without connection leaks | **Useful Case** |
 | **TC-REG-008** | Registration | SMTP service is offline / credentials wrong | Run registration with invalid `EMAIL_PASS` in `.env` | Registration succeeds; backend catches SMTP error and logs it | **Unavoidable** |
 | **TC-REG-009** | Registration | AI service is offline or times out | Trigger registration with FastAPI service stopped | API returns 400 "AI Service is currently unavailable" within 8s | **Unavoidable** |
 | **TC-REG-010** | Registration | Submit non-face images | Upload image of a room/object (no face detected) | AI Service returns 400 "Face not detected" gracefully | **Unknown** |

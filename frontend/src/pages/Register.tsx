@@ -221,10 +221,10 @@ export default function Register({ addToast }: RegisterProps) {
               <Camera onCapture={handleCapture} isLoading={isLoading} />
             ) : (
               <div className="flex flex-column gap-3 py-2 align-center">
-                <div className="flex align-center gap-2" style={{ color: 'var(--text-primary)', fontWeight: 500 }}>
-                  <CheckCircle size={18} />
+                  <div className="flex align-center gap-2" style={{ color: 'var(--text-primary)', fontWeight: 500 }}>
+                    <CheckCircle size={18} />
                   <span>5 scans recorded successfully</span>
-                </div>
+                  </div>
                 
                 <button
                   onClick={handleSubmit}

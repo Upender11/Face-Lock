@@ -42,10 +42,11 @@ export default function Dashboard({ onLogout, addToast }: DashboardProps) {
     }
 
     fetchProfile();
-  }, [navigate, onLogout, addToast]);
+  }, []);
 
-  const handleLogout = () => {
-    onLogout();
+
+  const handleLogout = async () => {
+    await onLogout();
     addToast('Logged out successfully', 'success');
     navigate('/');
   };

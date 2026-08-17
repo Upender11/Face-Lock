@@ -5,14 +5,10 @@
   "main": "dist/index.js",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
-    "build": "prisma generate && tsc",
-    "start": "node dist/index.js",
-    "postinstall": "prisma generate",
-    "prisma:generate": "prisma generate",
-    "prisma:migrate": "prisma migrate dev"
+    "build": "tsc",
+    "start": "node dist/index.js"
   },
   "dependencies": {
-    "@prisma/client": "^5.12.1",
     "axios": "^1.6.8",
     "bcryptjs": "^3.0.3",
     "cookie-parser": "^1.4.7",
@@ -33,7 +29,6 @@
     "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^20.12.7",
     "@types/nodemailer": "^8.0.1",
-    "prisma": "^5.12.1",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.4.5"
   }
