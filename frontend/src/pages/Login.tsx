@@ -52,7 +52,7 @@ export default function Login({ onLoginSuccess, addToast }: LoginProps) {
     setError(null);
 
     try {
-      const response = await api.post('/auth/face-login', {
+      const response = await api.post('/api/auth/face-login', {
         image: base64Image,
       });
 

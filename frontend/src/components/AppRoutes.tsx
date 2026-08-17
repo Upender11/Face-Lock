@@ -17,9 +17,9 @@ export function AppRoutes({ addToast, handleLoginSuccess, handleLogout }: AppRou
   return (
     <Routes>
       <Route path="/" element={<Landing />} />
-      <Route path="/api/register" element={<Register addToast={addToast} />} />
-      <Route path="/api/login" element={<Login onLoginSuccess={handleLoginSuccess} addToast={addToast} />} />
-      <Route path="/api/dashboard" element={
+      <Route path="/register" element={<Register addToast={addToast} />} />
+      <Route path="/login" element={<Login onLoginSuccess={handleLoginSuccess} addToast={addToast} />} />
+      <Route path="/dashboard" element={
         // <ProtectedRoute>
           <Dashboard onLogout={handleLogout} addToast={addToast} />
         // </ProtectedRoute>
