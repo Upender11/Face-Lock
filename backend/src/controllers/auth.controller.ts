@@ -182,7 +182,7 @@ export async function faceLogin(req: Request, res: Response) {
     } catch (err: any) {
       return res.status(400).json({ message: `Face generation error: ${err.message}` });
     }
-
+ 
     // Fetch all stored embeddings from SQLite
     const allEmbeddings = await FaceService.getAllFaceEmbeddings();
     if (allEmbeddings.length === 0) {
