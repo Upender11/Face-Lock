@@ -10,7 +10,7 @@ app = FastAPI(title="Face Recognition AI Service")
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173","https://face-lock-3og9.vercel.app"],
+    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173","https://face-lock-3og9.vercel.app","https://face-lock-amber.vercel.app"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
