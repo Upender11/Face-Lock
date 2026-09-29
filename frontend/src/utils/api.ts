@@ -3,7 +3,7 @@ import axios from 'axios';
 const isLocalhost = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || (isLocalhost ? 'http://localhost:5000/api' : 'https://50e96c6d746338.lhr.life/api'),
+  baseURL: "https://13-206-223-167.sslip.io/api",
   withCredentials: true,
 });
 
