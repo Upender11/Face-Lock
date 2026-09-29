@@ -1,7 +1,9 @@
 import axios from 'axios';
 
+const isLocalhost = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+
 const api = axios.create({
-  baseURL: "https://face-lock-3og9.vercel.app/api",
+  baseURL: import.meta.env.VITE_API_URL || (isLocalhost ? 'http://localhost:5000/api' : 'https://50e96c6d746338.lhr.life/api'),
   withCredentials: true,
 });
 
